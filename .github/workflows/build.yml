@@ -9,8 +9,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unpack project
         run: |
-          unzip -q -o heroic-mod.zip
-          cp -r heroic/. .
+          ls -la
+          Z=$(ls *.zip | head -n1)
+          echo "Using zip: $Z"
+          unzip -q -o "$Z" -d _unz
+          D=$(dirname "$(find _unz -name build.gradle | head -n1)")
+          echo "Project dir: $D"
+          cp -r "$D"/. .
+          ls -la
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
